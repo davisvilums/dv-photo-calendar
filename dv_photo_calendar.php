@@ -1,0 +1,82 @@
+<?php
+
+/**
+ * The plugin bootstrap file
+ *
+ * This file is read by WordPress to generate the plugin information in the plugin
+ * admin area. This file also includes all of the dependencies used by the plugin,
+ * registers the activation and deactivation functions, and defines a function
+ * that starts the plugin.
+ *
+ * @link              davis.vilums.me
+ * @since             1.0.0
+ * @package           Dv_photo_calendar
+ *
+ * @wordpress-plugin
+ * Plugin Name:       DV Photo Calendar
+ * Plugin URI:        davis.vilums.me
+ * Description:       This is a plugin to create photo calendar where to upload an image for every single day of the year
+ * Version:           1.0.0
+ * Author:            Davis
+ * Author URI:        davis.vilums.me
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       dv_photo_calendar
+ * Domain Path:       /languages
+ */
+
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
+/**
+ * Currently plugin version.
+ * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Rename this for your plugin and update it as you release new versions.
+ */
+define( 'DV_PHOTO_CALENDAR_VERSION', '1.0.0' );
+
+/**
+ * The code that runs during plugin activation.
+ * This action is documented in includes/class-dv_photo_calendar-activator.php
+ */
+function activate_dv_photo_calendar() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dv_photo_calendar-activator.php';
+	Dv_photo_calendar_Activator::activate();
+}
+
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-dv_photo_calendar-deactivator.php
+ */
+function deactivate_dv_photo_calendar() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dv_photo_calendar-deactivator.php';
+	Dv_photo_calendar_Deactivator::deactivate();
+}
+
+register_activation_hook( __FILE__, 'activate_dv_photo_calendar' );
+register_deactivation_hook( __FILE__, 'deactivate_dv_photo_calendar' );
+
+/**
+ * The core plugin class that is used to define internationalization,
+ * admin-specific hooks, and public-facing site hooks.
+ */
+require plugin_dir_path( __FILE__ ) . 'includes/class-dv_photo_calendar.php';
+
+/**
+ * Begins execution of the plugin.
+ *
+ * Since everything within the plugin is registered via hooks,
+ * then kicking off the plugin from this point in the file does
+ * not affect the page life cycle.
+ *
+ * @since    1.0.0
+ */
+function run_dv_photo_calendar() {
+
+	$plugin = new Dv_photo_calendar();
+	$plugin->run();
+
+}
+run_dv_photo_calendar();
