@@ -157,6 +157,9 @@ class Dv_photo_calendar {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+    //Call admin menus
+    $this->loader->add_action( 'admin_menu', $plugin_admin, 'dv_photo_calendar_admin_menu' );
+
 	}
 
 	/**

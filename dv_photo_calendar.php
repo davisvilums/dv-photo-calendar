@@ -30,6 +30,11 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+if(!defined("DV_PLUGIN_DIR")) 
+  define("DV_PLUGIN_DIR", plugin_dir_path(__FILE__));
+if(!defined("DV_PLUGIN_URL")) 
+  define("DV_PLUGIN_URL", plugins_url()."/dv_photo_calendar");
+
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
@@ -63,6 +68,44 @@ register_deactivation_hook( __FILE__, 'deactivate_dv_photo_calendar' );
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-dv_photo_calendar.php';
+
+/**
+ * Creating Day Post type
+ */
+function create_day_posttype() {
+  register_post_type( 'day',
+  // CPT Options
+      array(
+          'labels' => array(
+              'name' => __( 'Days' ),
+              'singular_name' => __( 'Day' )
+          ),
+          'public' => true,
+          'has_archive' => true,
+          'menu_icon' => 'dashicons-format-image',
+          'supports' => array('title','thumbnail'),
+          'rewrite' => array('slug' => 'day'),
+      )
+  );
+}
+add_action( 'wp_loaded', 'create_day_posttype');
+
+// function dv_load_menus() {
+//   add_menu_page("Display Calendar", "Nokalpots Calendar", "manage_options", "calendar-menu","dv_menu_item", "dashicons-admin-plugins", 30);
+// }
+// add_action("admin_menu", "dv_load_menus");
+
+
+  // if ( is_post_type_archive('day') ) {
+  //   die('234');
+  //   $theme_files = array('archive-my_plugin_lesson.php', 'myplugin/archive-lesson.php');
+  //   $exists_in_theme = locate_template($theme_files, false);
+  //   if ( $exists_in_theme != '' ) {
+  //     return $exists_in_theme;
+  //   } else {
+  //     return plugin_dir_path(__FILE__) . 'archive-lesson.php';
+  //   }
+  // }
 
 /**
  * Begins execution of the plugin.

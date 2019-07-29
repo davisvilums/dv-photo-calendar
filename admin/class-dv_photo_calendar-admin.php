@@ -100,4 +100,12 @@ class Dv_photo_calendar_Admin {
 
 	}
 
+  public function dv_photo_calendar_admin_menu() {
+    add_submenu_page("edit.php?post_type=day", "Displays Calendar", "Display Calendar", "manage_options", "display-calendar", array($this, "dv_menu_item"));
+  }
+
+  public function dv_menu_item() {
+    include_once DV_PLUGIN_DIR . '/admin/partials/dv_photo_calendar-admin-calendar.php';
+  }
+
 }

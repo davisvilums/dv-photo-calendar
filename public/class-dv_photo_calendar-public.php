@@ -100,4 +100,44 @@ class Dv_photo_calendar_Public {
 
 	}
 
+  /**
+   * Create Days shortcode
+   */
+  public function create_shortcode()
+  {
+    add_shortcode( 'photo_calendar_print_posts', array($this, 'print_posts_callback'));
+  }
+
+  /**
+   * Callback to handle 'photo_calendar_print_posts' shortcode
+   * @param  $atts Attributes passed to shortcode
+   * @return string       Html to rendered
+   */
+  public function print_posts_callback( $atts ){
+
+    // $atts = shortcode_atts( [
+    //   'number_of_posts' => 0
+    // ], $atts, 'photo_calendar_print_posts');
+    
+
+    // $args = [
+    //   'post_type' => 'day',
+    //   'posts_per_page' => is_numeric( $atts['number_of_posts']) ? $atts['number_of_posts'] : 10
+    // ];
+
+    // $query = new \WP_Query( $args );   
+
+    // echo '<pre>';
+    // print_r($query);
+    // echo '</pre>';
+
+    // return $this->get_view()->display_posts([
+    //   'fetched_posts' => $query
+    // ]);
+
+    // return View::render_template('frontend/print-posts-shortcode.php', [
+    //   'fetched_posts' => $this->get_model()->fetch_posts( $atts )
+    // ]);
+  }
+
 }
