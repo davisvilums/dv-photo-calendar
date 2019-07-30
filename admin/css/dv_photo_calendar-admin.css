@@ -2,3 +2,13 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+#dv_photo_calendar td {
+  white-space: nowrap;
+  font-size: .8em;
+  width: 12vw;
+  height: 12vw;
+  text-align: center;
+  vertical-align: bottom;
+  background-size: cover;
+  background-position: center center;
+}

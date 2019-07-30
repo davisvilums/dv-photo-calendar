@@ -83,29 +83,12 @@ function create_day_posttype() {
           'public' => true,
           'has_archive' => true,
           'menu_icon' => 'dashicons-format-image',
-          'supports' => array('title','thumbnail'),
+          'supports' => array('thumbnail'),
           'rewrite' => array('slug' => 'day'),
       )
   );
 }
 add_action( 'wp_loaded', 'create_day_posttype');
-
-// function dv_load_menus() {
-//   add_menu_page("Display Calendar", "Nokalpots Calendar", "manage_options", "calendar-menu","dv_menu_item", "dashicons-admin-plugins", 30);
-// }
-// add_action("admin_menu", "dv_load_menus");
-
-
-  // if ( is_post_type_archive('day') ) {
-  //   die('234');
-  //   $theme_files = array('archive-my_plugin_lesson.php', 'myplugin/archive-lesson.php');
-  //   $exists_in_theme = locate_template($theme_files, false);
-  //   if ( $exists_in_theme != '' ) {
-  //     return $exists_in_theme;
-  //   } else {
-  //     return plugin_dir_path(__FILE__) . 'archive-lesson.php';
-  //   }
-  // }
 
 /**
  * Begins execution of the plugin.

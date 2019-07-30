@@ -98,6 +98,8 @@ class Dv_photo_calendar_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dv_photo_calendar-admin.js', array( 'jquery' ), $this->version, false );
 
+    wp_localize_script( $this->plugin_name, "dv_photo_ajax_url", admin_url('admin-ajax.php' ));
+
 	}
 
   public function dv_photo_calendar_admin_menu() {
@@ -106,6 +108,49 @@ class Dv_photo_calendar_Admin {
 
   public function dv_menu_item() {
     include_once DV_PLUGIN_DIR . '/admin/partials/dv_photo_calendar-admin-calendar.php';
+  }
+
+  public function dv_photo_replace_day_title() {
+    add_action(
+      'admin_head-edit.php',
+      array($this, 'wpse152971_edit_post_change_title_in_list')
+    );
+  }
+  public function wpse152971_edit_post_change_title_in_list() {
+      add_filter( 'the_title', array($this, 'wpse152971_construct_new_title'), 100, 2 );
+    }
+
+  public function wpse152971_construct_new_title( $title, $id ) {
+    if(get_post_type($id) == "day"){
+      return get_the_date( 'Y-m-d', $id );
+    }
+    return $title;
+  }
+
+  public function dv_photo_ajax_handler_fn() {
+    // echo '123123';
+    // die();
+    $param = isset($_REQUEST['param']) ? $_REQUEST['param'] : '';
+    if($param == "save_date"){
+      $data = $_REQUEST;
+
+      $my_post = array('post_title' => $data['date'],
+          'post_date' => $data['date'],
+          'post_status' => 'publish',
+          'post_type' => 'day'
+      );
+
+      $post_id = wp_insert_post( $my_post );
+      echo '0';
+      print_r($post_id);
+      echo '1';
+      print_r($data['image']);
+      echo '2';
+      set_post_thumbnail($post_id, intval($data['image']));
+      // print_r($data);
+
+    }
+    wp_die();
   }
 
 }

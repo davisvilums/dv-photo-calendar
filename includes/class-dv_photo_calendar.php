@@ -159,7 +159,10 @@ class Dv_photo_calendar {
 
     //Call admin menus
     $this->loader->add_action( 'admin_menu', $plugin_admin, 'dv_photo_calendar_admin_menu' );
+    $this->loader->add_action( 'posts_selection', $plugin_admin, 'dv_photo_replace_day_title' );
 
+    // Ajax request handler
+    $this->loader->add_action( 'wp_ajax_boiler_request', $plugin_admin, 'dv_photo_ajax_handler_fn' );
 	}
 
 	/**
