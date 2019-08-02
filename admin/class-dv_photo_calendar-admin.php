@@ -96,7 +96,9 @@ class Dv_photo_calendar_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dv_photo_calendar-admin.js', array( 'jquery' ), $this->version, false );
+		// wp_enqueue_script( 'jquery-ui-draggable');
+    wp_enqueue_script( 'jquery-ui-droppable');
+    wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dv_photo_calendar-admin.js', array( 'jquery', 'jquery-ui-droppable' ), $this->version, false );
 
     wp_localize_script( $this->plugin_name, "dv_photo_ajax_url", admin_url('admin-ajax.php' ));
 
@@ -128,8 +130,6 @@ class Dv_photo_calendar_Admin {
   }
 
   public function dv_photo_ajax_handler_fn() {
-    // echo '123123';
-    // die();
     $param = isset($_REQUEST['param']) ? $_REQUEST['param'] : '';
     if($param == "save_date"){
       $data = $_REQUEST;
@@ -141,14 +141,31 @@ class Dv_photo_calendar_Admin {
       );
 
       $post_id = wp_insert_post( $my_post );
-      echo '0';
-      print_r($post_id);
-      echo '1';
-      print_r($data['image']);
-      echo '2';
+      // print_r($post_id);
+      // print_r($data['image']);
       set_post_thumbnail($post_id, intval($data['image']));
-      // print_r($data);
 
+    }
+    if($param == "change_date"){
+      $data = $_REQUEST;
+      $time = date('Y-m-d 12:0:0', strtotime($data['date']));
+
+      $my_post = array(
+        'ID' => $data['id'],
+        'post_title' => $data['date'],
+        'post_date' => $time,
+        'post_date_gmt' => get_gmt_from_date( $time )
+      );
+      $post_id= wp_update_post($my_post, true);           
+
+      if (is_wp_error($post_id)) {
+        $errors = $post_id->get_error_messages();
+        foreach ($errors as $error) {
+          echo $error;
+        }
+      }
+
+      $post = get_post($data['id']);
     }
     wp_die();
   }

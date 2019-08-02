@@ -70,7 +70,7 @@ class Dv_photo_calendar {
 		if ( defined( 'DV_PHOTO_CALENDAR_VERSION' ) ) {
 			$this->version = DV_PHOTO_CALENDAR_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1.0.1';
 		}
 		$this->plugin_name = 'dv_photo_calendar';
 

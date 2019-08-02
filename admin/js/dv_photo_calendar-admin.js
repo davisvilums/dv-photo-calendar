@@ -29,9 +29,9 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
   $(function() {
-    $('.dv_cal_upload').on('click', function(){
+    $('#dv_photo_calendar').on('click', '.dv_cal_upload', function(){
       var dv_cell = this;
-      var dv_date = $(dv_cell).data("date");
+      var dv_date = $(dv_cell).closest("td").data("date");
       var image = wp.media({
         title: "Upload Daily image",
         multiple: false
@@ -44,18 +44,65 @@
       })
     });
   });
+
+  $( window ).load(function() {
+    $( ".dv_sheet" ).liveDraggable({ revert: "invalid" });
+
+    $( ".dv_sheet" ).parent().droppable({
+      classes: {
+        "ui-droppable-active": "ui-state-active",
+        "ui-droppable-hover": "ui-state-hover"
+      },
+      drop: function( event, ui ) {
+        var $parent = $(ui.draggable).parent();
+        var oid = $(ui.draggable).data("id");
+        var nid = $(this).find('.dv_sheet').data("id");
+        var odate = $parent.data("date");
+        var ndate = $(this).data("date");
+        $parent.append($(this).html()).find('.dv_date').html(odate);
+
+        if(nid !== undefined) changDate(nid, odate);
+        if(oid !== undefined) changDate(oid, ndate);
+        $(this).html('');
+        $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
+        $(this).find('.dv_date').html($(this).data("date"));
+      }
+    });
+  });
+
+
+   $.fn.liveDraggable = function (opts) {
+      this.live("mouseover", function() {
+         if (!$(this).data("init")) {
+            $(this).data("init", true).draggable(opts);
+         }
+      });
+      return this;
+   };
+
 })( jQuery );
 
 function submit_dv_image(date, image){
-  console.log(dv_photo_ajax_url,date, image);
+  // console.log(dv_photo_ajax_url,date, image);
   var data = {
     date: date,
     image: image,
     action: "boiler_request",
     param: "save_date"
   };
-  var serialized = $.param(data);
   $.post(dv_photo_ajax_url, $.param(data), function(response) {
-    console.log(response);
+    // console.log(response);
+  });
+}
+
+function changDate(id, date) {
+  var data = {
+    date: date,
+    id: id,
+    action: "boiler_request",
+    param: "change_date"
+  };
+  $.post(dv_photo_ajax_url, $.param(data), function(response) {
+    // console.log(response);
   });
 }
