@@ -38,8 +38,8 @@
       }).open().on("select", function(){
         var files = image.state().get("selection");
         var jsonFiles = files.toJSON();
-        $(dv_cell).parent().css("background-image", "url(" + jsonFiles[0].url + ")")
-          .find("button").remove();
+        $(dv_cell).css("background-image", "url(" + jsonFiles[0].url + ")")
+          .find(".upload-text").remove();
         submit_dv_image(dv_date, jsonFiles[0].id);
       })
     });
@@ -64,7 +64,7 @@
         if(nid !== undefined) changDate(nid, odate);
         if(oid !== undefined) changDate(oid, ndate);
         $(this).html('');
-        $(ui.draggable).detach().css({top: 0,left: 0}).appendTo(this);
+        $(ui.draggable).detach().css({top: 0,left: 0, width: "100%", height: "100%"}).appendTo(this);
         $(this).find('.dv_date').html($(this).data("date"));
       }
     });

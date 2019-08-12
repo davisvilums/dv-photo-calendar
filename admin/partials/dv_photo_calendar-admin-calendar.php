@@ -44,12 +44,12 @@
              ?>
             <td data-date="<?php echo $date; ?>">
               <?php if($dates[$date]): ?>
-                <?php $thumbnail = get_the_post_thumbnail_url($dates[$date],'medium'); ?>
+                <?php $thumbnail = get_the_post_thumbnail_url($dates[$date],'thumbnail'); ?>
                 <div class="dv_sheet dv_sheet-back" style="background-image: url('<?php echo $thumbnail; ?>');" data-id="<?php echo $dates[$date] ?>">
                   <div class="dv_date"><?php echo date("m-d", strtotime($date)); ?></div>
                 </div>
               <?php else: ?>
-                <div class="dv_sheet dv_sheet-blank">
+                <div class="dv_sheet dv_sheet-blank dv_cal_upload">
                   <!-- <button class="button media-button button-primary button-large media-button-select dv_cal_upload">Upload</button> -->
                   <div class="upload-text">Upload</div>
                   <div class="dv_date"><?php echo date("m-d", strtotime($date)); ?></div>

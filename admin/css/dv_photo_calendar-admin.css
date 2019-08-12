@@ -2,18 +2,24 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+#dv_photo_calendar {
+  padding-right: 15px;
+}
 #dv_photo_calendar table {
   border: none;
   border-top: 1px solid #000;
   border-right: 1px solid #000;
+  width: 100%;
+  margin-right: 15px;
 }
 #dv_photo_calendar td {
   border-left: 1px solid #000;
   border-bottom: 1px solid #000;
-  width: 12vw;
+  position: relative;
+  padding-top: 14%;
 }
-#dv_photo_calendar td div {
-  height: 12vw;
+#dv_photo_calendar td div.dv_sheet {
+  /*height: 12vw;*/
   background-size: cover;
   background-position: center center;
   white-space: nowrap;
@@ -23,6 +29,11 @@
   justify-content: flex-end;
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 0;
 }
 #dv_photo_calendar td div.ui-draggable-dragging {
   z-index: 100;
@@ -37,4 +48,5 @@
 #dv_photo_calendar td div .upload-text {
   font-size: 1vw;
   color: black;
+  margin: auto;
 }
